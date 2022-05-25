@@ -10,38 +10,41 @@ import (
 	"github.com/aws/aws-sdk-go/service/route53"
 )
 
-func GetAwsNS(zID string, zNAME string) {
+func GetRecordType(zoneID, zoneName, recordType string) ([]string, error) {
 
 	sess, err := session.NewSession(&aws.Config{
 		Region: aws.String("eu-west-1"),
 	})
 	if err != nil {
 		fmt.Println("failed to create session,", err)
+		return nil, err
 	}
 
 	svc := route53.New(sess)
 
 	resp, err := svc.ListResourceRecordSets(&route53.ListResourceRecordSetsInput{
-		HostedZoneId:    aws.String(zID),
-		StartRecordName: aws.String(zNAME),
-		StartRecordType: aws.String("NS"),
+		HostedZoneId:    aws.String(zoneID),
+		StartRecordName: aws.String(zoneName),
+		StartRecordType: aws.String(recordType),
 	})
 	if err != nil {
-		fmt.Println("Caiu no error do resp")
-		fmt.Println(err)
+		fmt.Println("Failed to get the resources list", err)
+		return nil, err
 	}
 	if len(resp.ResourceRecordSets) == 0 {
 		fmt.Println("Nothing found")
 	}
+
 	ns := make([]string, len(resp.ResourceRecordSets[0].ResourceRecords))
 	for i := range resp.ResourceRecordSets[0].ResourceRecords {
 		ns[i] = *resp.ResourceRecordSets[0].ResourceRecords[i].Value
 	}
 	sort.Strings(ns)
-	fmt.Println(ns)
+
+	return ns, nil
 }
 
-func GetNS(d string) {
+func GetNS(d string) ([]string, error) {
 	var nss []string
 	n, _ := net.LookupNS(d)
 
@@ -49,7 +52,7 @@ func GetNS(d string) {
 		nss = append(nss, v.Host)
 	}
 
-	fmt.Println(nss)
+	return nss, nil
 }
 
 func GetHostedZoneID(d string) (*route53.HostedZone, error) {

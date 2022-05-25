@@ -8,15 +8,15 @@ import (
 	"github.com/aws/aws-sdk-go/service/acm"
 )
 
-var Domains []string
+var domains []string
 
-func ListCertificate() {
+func ListCertificate() ([]string, error) {
 	sess, err := session.NewSession(&aws.Config{
 		Region: aws.String("eu-west-1"),
 	})
 	if err != nil {
 		fmt.Println("failed to create session,", err)
-		return
+		return nil, err
 	}
 
 	svc := acm.New(sess)
@@ -33,10 +33,12 @@ func ListCertificate() {
 
 	if err != nil {
 		fmt.Println(err.Error())
-		return
+		return nil, err
 	}
 
 	for _, v := range resp.CertificateSummaryList {
-		Domains = append(Domains, *v.DomainName)
+		domains = append(domains, *v.DomainName)
 	}
+
+	return domains, nil
 }
