@@ -12,7 +12,6 @@ func main() {
 
 	acm.ListCertificate()
 
-	// fmt.Println(domains)
 	for _, v := range acm.Domains {
 		fmt.Println("")
 		fmt.Println("Domain: ", v)

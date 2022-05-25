@@ -17,7 +17,6 @@ func GetAwsNS(zID string, zNAME string) {
 	})
 	if err != nil {
 		fmt.Println("failed to create session,", err)
-		// return nil, err
 	}
 
 	svc := route53.New(sess)
@@ -30,11 +29,9 @@ func GetAwsNS(zID string, zNAME string) {
 	if err != nil {
 		fmt.Println("Caiu no error do resp")
 		fmt.Println(err)
-		// return nil, err
 	}
 	if len(resp.ResourceRecordSets) == 0 {
 		fmt.Println("Nothing found")
-		// return nil, nil
 	}
 	ns := make([]string, len(resp.ResourceRecordSets[0].ResourceRecords))
 	for i := range resp.ResourceRecordSets[0].ResourceRecords {
@@ -51,17 +48,6 @@ func GetNS(d string) {
 	for _, v := range n {
 		nss = append(nss, v.Host)
 	}
-
-	// out, err := json.Marshal(n)
-	// if err != nil {
-	// 	fmt.Println(err)
-	// }
-
-	// for k, v := range out {
-	// 	fmt.Println(k)
-	// 	fmt.Println(v)
-	// 	nss = append(nss)
-	// }
 
 	fmt.Println(nss)
 }
