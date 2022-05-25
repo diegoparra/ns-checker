@@ -1,8 +1,5 @@
-module scd
+module github.com/diegoparra/scd
 
-go 1.18
+go 1.16
 
-require (
-	github.com/aws/aws-sdk-go v1.44.20 // indirect
-	github.com/jmespath/go-jmespath v0.4.0 // indirect
-)
+require github.com/aws/aws-sdk-go v1.44.21 // indirect
