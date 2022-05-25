@@ -1,4 +1,4 @@
-package validation
+package utils
 
 func Validate(d, c []string) bool {
 	if len(d) != len(c) {

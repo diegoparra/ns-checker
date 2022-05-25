@@ -6,7 +6,7 @@ import (
 
 	"github.com/diegoparra/ns-checker/pkg/acm"
 	"github.com/diegoparra/ns-checker/pkg/r53"
-	"github.com/diegoparra/ns-checker/pkg/validation"
+	"github.com/diegoparra/ns-checker/pkg/utils"
 )
 
 func main() {
@@ -15,8 +15,6 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
-
-	fmt.Println(d)
 
 	for _, v := range d {
 		// Go over Domain list
@@ -45,7 +43,7 @@ func main() {
 		fmt.Println("Desired NS: ", desiredNS)
 
 		// Validate Desired NS with Current NS
-		val := validation.Validate(desiredNS, ns)
+		val := utils.Validate(desiredNS, ns)
 		if val != true {
 			fmt.Println("Domain: " + v + " not poiting to Linkfire NS's")
 		} else {
@@ -61,6 +59,9 @@ func main() {
 		// }
 		// fmt.Println("Current TXT: ", desiredTXT)
 		// fmt.Println("")
-
 	}
+
+	// Show number of analyzed domains
+	fmt.Println("Number of analyzed Domains: ", len(d))
+
 }
