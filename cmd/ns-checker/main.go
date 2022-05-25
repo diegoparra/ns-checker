@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/diegoparra/scd/pkg/acm"
-	"github.com/diegoparra/scd/pkg/r53"
+	"github.com/diegoparra/ns-checker/pkg/acm"
+	"github.com/diegoparra/ns-checker/pkg/r53"
 )
 
 func main() {

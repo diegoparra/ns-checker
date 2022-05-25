@@ -1,4 +1,4 @@
-module github.com/diegoparra/scd
+module github.com/diegoparra/ns-checker
 
 go 1.16
 
