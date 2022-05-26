@@ -48,8 +48,8 @@ func main() {
 			fmt.Println("")
 			fmt.Println("Status: Error validating NS")
 			fmt.Println("Domain: ", v)
-			fmt.Println("Desired NS: ", desiredNS)
 			fmt.Println("Current NS: ", ns)
+			fmt.Println("Desired NS: ", desiredNS)
 			fmt.Println("")
 		}
 
