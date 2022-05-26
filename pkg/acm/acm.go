@@ -2,6 +2,7 @@ package acm
 
 import (
 	"fmt"
+	"regexp"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -37,7 +38,16 @@ func ListCertificate() ([]string, error) {
 	}
 
 	for _, v := range resp.CertificateSummaryList {
-		domains = append(domains, *v.DomainName)
+		found, err := regexp.MatchString(`(?:linkfire.co|metafire.co|linkfire.com|lnk.to|lnktest.dk|mit.mpo.dk|server|lnk.tt|amazonaws.com)`, string(*v.DomainName))
+		if err != nil {
+			fmt.Println("Error to run regex match string", err)
+		}
+
+		if found {
+			// fmt.Println("LF Domain found, not appending")
+		} else {
+			domains = append(domains, *v.DomainName)
+		}
 	}
 
 	return domains, nil
