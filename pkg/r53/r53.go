@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net"
 	"sort"
+	"strings"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -37,7 +38,7 @@ func GetRecordType(zoneID, zoneName, recordType string) ([]string, error) {
 
 	ns := make([]string, len(resp.ResourceRecordSets[0].ResourceRecords))
 	for i := range resp.ResourceRecordSets[0].ResourceRecords {
-		ns[i] = *resp.ResourceRecordSets[0].ResourceRecords[i].Value
+		ns[i] = strings.TrimSuffix(*resp.ResourceRecordSets[0].ResourceRecords[i].Value, ".")
 	}
 	sort.Strings(ns)
 
@@ -49,7 +50,8 @@ func GetNS(d string) ([]string, error) {
 	n, _ := net.LookupNS(d)
 
 	for _, v := range n {
-		nss = append(nss, v.Host)
+		a := strings.TrimSuffix(v.Host, ".")
+		nss = append(nss, a)
 	}
 
 	return nss, nil
