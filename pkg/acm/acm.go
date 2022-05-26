@@ -43,9 +43,7 @@ func ListCertificate() ([]string, error) {
 			fmt.Println("Error to run regex match string", err)
 		}
 
-		if found {
-			// fmt.Println("LF Domain found, not appending")
-		} else {
+		if !found {
 			domains = append(domains, *v.DomainName)
 		}
 	}
