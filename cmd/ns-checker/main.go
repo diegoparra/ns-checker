@@ -18,8 +18,6 @@ func main() {
 
 	// Go over Domain list
 	for _, v := range d {
-		// fmt.Println("")
-		// fmt.Println("Domain: ", v)
 
 		//Get HostedZoneID
 		id, err := r53.GetHostedZoneID(v)
