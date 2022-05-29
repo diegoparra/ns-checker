@@ -18,29 +18,24 @@ func main() {
 
 	// Go over Domain list
 	for _, v := range d {
-		// fmt.Println("")
-		// fmt.Println("Domain: ", v)
 
 		//Get HostedZoneID
 		id, err := r53.GetHostedZoneID(v)
 		if err != nil {
 			fmt.Println(err)
 		}
-		// fmt.Println("HostedZoneID: ", strings.TrimPrefix(*id.Id, "/hostedzone/"))
 
 		// Get Current NS
 		ns, err := r53.GetNS(v)
 		if err != nil {
 			fmt.Println(err)
 		}
-		// fmt.Println("Current NS: ", ns)
 
 		// Get Desired NS
 		desiredNS, err := r53.GetRecordType(strings.TrimPrefix(*id.Id, "/hostedzone/"), v, "NS")
 		if err != nil {
 			fmt.Println(err)
 		}
-		// fmt.Println("Desired NS: ", desiredNS)
 
 		// Validate Desired NS with Current NS
 		val := utils.Validate(desiredNS, ns)
