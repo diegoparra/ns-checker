@@ -3,6 +3,7 @@ package r53
 import (
 	"fmt"
 	"net"
+	"regexp"
 	"sort"
 	"strings"
 
@@ -36,10 +37,38 @@ func GetRecordType(zoneID, zoneName, recordType string) ([]string, error) {
 		fmt.Println("Nothing found")
 	}
 
-	ns := make([]string, len(resp.ResourceRecordSets[0].ResourceRecords))
+	// var ns []string
+
+	// fmt.Println(resp)
+
+	// Current working code
+	// ns := make([]string, len(resp.ResourceRecordSets[0].ResourceRecords))
+	// for i := range resp.ResourceRecordSets[0].ResourceRecords {
+	// 	ns[i] = strings.TrimSuffix(*resp.ResourceRecordSets[0].ResourceRecords[i].Value, ".")
+	// }
+
+	// Testing new code
+	ns := []string{}
+
 	for i := range resp.ResourceRecordSets[0].ResourceRecords {
-		ns[i] = strings.TrimSuffix(*resp.ResourceRecordSets[0].ResourceRecords[i].Value, ".")
+		ns = append(ns, strings.TrimSuffix(*resp.ResourceRecordSets[0].ResourceRecords[i].Value, "."))
 	}
+
+	if recordType == "TXT" {
+
+		found, err := regexp.MatchString(`(?:facebook-domain-verification)`, string(ns[0]))
+		if err != nil {
+			fmt.Println("Error to run regex match string", err)
+		}
+
+		if found {
+			return ns, nil
+		} else {
+			return []string{}, nil
+
+		}
+	}
+
 	sort.Strings(ns)
 
 	return ns, nil
