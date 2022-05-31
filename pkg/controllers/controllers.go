@@ -50,31 +50,28 @@ func CheckNameServer() {
 			fmt.Println(err)
 		}
 
-		// TODO
-		// We should fix this TXT record as it does not work as intended
 		// Get Desired TXT
-		desiredTXT, err := r53.GetRecordType(strings.TrimPrefix(*id.Id, "/hostedzone/"), v, "TXT")
+		txt, err := r53.GetRecordType(strings.TrimPrefix(*id.Id, "/hostedzone/"), v, "TXT")
 		if err != nil {
 			fmt.Println(err)
 		}
 
-		if len(desiredTXT) <= 0 {
+		if len(txt) <= 0 {
 			myDomain.HasFacebookCode = false
 		} else {
 			myDomain.HasFacebookCode = true
 			withFb += 1
 		}
 
-		// fmt.Println("Printing HasFacebookCode ")
 		// fmt.Println(v)
 		// fmt.Println("HasFacebookCode: ", myDomain.HasFacebookCode)
 
-		// Validate Desired NS with Current NS
+		// Validate Desired NS against Current NS
 		val := utils.Validate(myDomain.DesiredNameServer, myDomain.CurrentNameServer)
 		if val != true {
 			fmt.Println("")
 			fmt.Println("Status: Error validating NS")
-			fmt.Println("Domain: ", v)
+			fmt.Println("Domain: ", myDomain.Domain)
 			fmt.Println("Current NS: ", myDomain.CurrentNameServer)
 			fmt.Println("Desired NS: ", myDomain.DesiredNameServer)
 			fmt.Println("")
