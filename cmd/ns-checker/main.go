@@ -31,13 +31,22 @@ func main() {
 			fmt.Println(err)
 		}
 
-		fmt.Println(&ns)
-
 		// Get Desired NS
 		desiredNS, err := r53.GetRecordType(strings.TrimPrefix(*id.Id, "/hostedzone/"), v, "NS")
 		if err != nil {
 			fmt.Println(err)
 		}
+
+		// TODO
+		// We should fix this TXT record as it does not work as intended
+		// Get Desired TXT
+		desiredTXT, err := r53.GetRecordType(strings.TrimPrefix(*id.Id, "/hostedzone/"), v, "TXT")
+		if err != nil {
+			fmt.Println(err)
+		}
+		fmt.Println("Printing desiredTXT ")
+		fmt.Println(v)
+		fmt.Println("Current TXT: ", desiredTXT)
 
 		// Validate Desired NS with Current NS
 		val := utils.Validate(desiredNS, ns)
@@ -50,16 +59,6 @@ func main() {
 			fmt.Println("")
 		}
 
-		// TODO
-		// We should fix this TXT record as it does not work as intended
-		// Get Desired TXT
-		desiredTXT, err := r53.GetRecordType(strings.TrimPrefix(*id.Id, "/hostedzone/"), v, "TXT")
-		if err != nil {
-			fmt.Println(err)
-		}
-		fmt.Println("Current TXT: ", desiredTXT)
-		fmt.Println(&ns)
-		// fmt.Println("")
 	}
 
 	// Show number of analyzed domains
