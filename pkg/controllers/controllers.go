@@ -10,7 +10,7 @@ import (
 )
 
 type domain struct {
-	Domain            string
+	Url               string
 	DesiredNameServer []string
 	CurrentNameServer []string
 	HasFacebookCode   bool
@@ -30,7 +30,7 @@ func CheckNameServer() {
 	// Go over Domain list
 	for _, v := range d {
 
-		myDomain.Domain = v
+		myDomain.Url = v
 
 		//Get HostedZoneID
 		id, err := r53.GetHostedZoneID(v)
@@ -71,7 +71,7 @@ func CheckNameServer() {
 		if val != true {
 			fmt.Println("")
 			fmt.Println("Status: Error validating NS")
-			fmt.Println("Domain: ", myDomain.Domain)
+			fmt.Println("Domain: ", myDomain.Url)
 			fmt.Println("Current NS: ", myDomain.CurrentNameServer)
 			fmt.Println("Desired NS: ", myDomain.DesiredNameServer)
 			fmt.Println("")
