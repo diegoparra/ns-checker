@@ -37,17 +37,6 @@ func GetRecordType(zoneID, zoneName, recordType string) ([]string, error) {
 		fmt.Println("Nothing found")
 	}
 
-	// var ns []string
-
-	// fmt.Println(resp)
-
-	// Current working code
-	// ns := make([]string, len(resp.ResourceRecordSets[0].ResourceRecords))
-	// for i := range resp.ResourceRecordSets[0].ResourceRecords {
-	// 	ns[i] = strings.TrimSuffix(*resp.ResourceRecordSets[0].ResourceRecords[i].Value, ".")
-	// }
-
-	// Testing new code
 	ns := []string{}
 
 	for i := range resp.ResourceRecordSets[0].ResourceRecords {
