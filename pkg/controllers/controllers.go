@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"encoding/json"
 	"fmt"
 	"strings"
 
@@ -77,6 +78,8 @@ func CheckNameServer() {
 			fmt.Println("")
 		}
 
+		j, _ := json.Marshal(myDomain)
+		fmt.Println(string(j))
 	}
 
 	// Show number of analyzed domains
