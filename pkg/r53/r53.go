@@ -12,7 +12,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/route53"
 )
 
-func GetRecordType(zoneID, zoneName, recordType string) ([]string, error) {
+func GetRecordByType(zoneID, zoneName, recordType string) ([]string, error) {
 
 	sess, err := session.NewSession(&aws.Config{
 		Region: aws.String("eu-west-1"),

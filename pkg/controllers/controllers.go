@@ -46,13 +46,13 @@ func CheckNameServer() {
 		}
 
 		// Get Desired NS
-		myDomain.DesiredNameServer, err = r53.GetRecordType(strings.TrimPrefix(*id.Id, "/hostedzone/"), v, "NS")
+		myDomain.DesiredNameServer, err = r53.GetRecordByType(strings.TrimPrefix(*id.Id, "/hostedzone/"), v, "NS")
 		if err != nil {
 			fmt.Println(err)
 		}
 
 		// Get Desired TXT
-		txt, err := r53.GetRecordType(strings.TrimPrefix(*id.Id, "/hostedzone/"), v, "TXT")
+		txt, err := r53.GetRecordByType(strings.TrimPrefix(*id.Id, "/hostedzone/"), v, "TXT")
 		if err != nil {
 			fmt.Println(err)
 		}
