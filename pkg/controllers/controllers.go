@@ -17,9 +17,10 @@ type domain struct {
 	HasFacebookCode   bool
 }
 
-var myDomain domain
-
-var withFb int
+var (
+	myDomain domain
+	withFb   int
+)
 
 func CheckNameServer() {
 
@@ -63,9 +64,6 @@ func CheckNameServer() {
 			myDomain.HasFacebookCode = true
 			withFb += 1
 		}
-
-		// fmt.Println(v)
-		// fmt.Println("HasFacebookCode: ", myDomain.HasFacebookCode)
 
 		// Validate Desired NS against Current NS
 		val := utils.Validate(myDomain.DesiredNameServer, myDomain.CurrentNameServer)
